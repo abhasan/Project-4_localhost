@@ -18,8 +18,9 @@ CLIENT_ID = json.loads(open(
 app = Flask(__name__)
 app.secret_key = "super secret key"
 
-engine = create_engine('sqlite:///sportinggood_users.db', connect_args={
-    'check_same_thread': False}, poolclass=StaticPool)
+engine = create_engine('postgresql+psycopg2://catalog:catalog@localhost/catalog')
+# engine = create_engine('postgresql://catalog:catalog@localhost/catalog', connect_args={
+#     'check_same_thread': False}, poolclass=StaticPool)
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session_db = DBSession()
@@ -128,16 +129,16 @@ def gconnect():
     return output
 
 
-# Show all categories of the sportinggood website, it also points to the main
-# Home page as well
-@app.route('/')
-def showMain():
-    # categories = session_db.query(Category).all()
-    # return "This page will show all the categories of the database"
-    return render_template(
-        'main.html')
-    # return "hello world"
+# # Show all categories of the sportinggood website, it also points to the main
+# # Home page as well
+# def showMain():
+#     # categories = session_db.query(Category).all()
+#     # return "This page will show all the categories of the database"
+#     return render_template(
+#         'main.html')
+#     # return "hello world"
 
+@app.route('/')
 @app.route('/catalog/')
 def showCategories():
     categories = session_db.query(Category).all()

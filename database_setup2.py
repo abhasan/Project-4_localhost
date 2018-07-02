@@ -65,5 +65,9 @@ class Category_item(Base):
         }
 
 
-engine = create_engine('sqlite:///sportinggood_users.db')
+# engine = create_engine('sqlite:///sportinggood_users.db')
+# engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
+engine = create_engine('postgresql+psycopg2://catalog:catalog@localhost/catalog')
+
+
 Base.metadata.create_all(engine)
